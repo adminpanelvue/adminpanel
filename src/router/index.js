@@ -5,6 +5,9 @@ const routes = [
   {
     path: '/',
     component: () => import('@/components/Drawer.vue'),
+    redirect: {
+      path: '/about'
+    },
     children: [
       {
         path: 'users',
@@ -26,6 +29,10 @@ const routes = [
       {
         path: 'airports',
         component: () => import('@/views/Airports.vue'),
+      },
+      {
+        path: 'about',
+        component: () => import('@/views/About.vue'),
       },
     ],
   },

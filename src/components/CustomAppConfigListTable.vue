@@ -1,4 +1,26 @@
 <template>
+
+    <v-container  class="bg-blue">
+        
+        <v-row class="pa-4 align-center" >
+            <div :class="['text-h4', 'pa-2']">AppConfig List</div>
+            <v-spacer></v-spacer>
+            <v-btn class="bg-white" @click="dialog = true">Add</v-btn>
+        </v-row>
+            
+        
+    </v-container>
+    <v-snackbar
+      v-model="snackbar"
+      location="center"
+    >
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, ratione debitis quis est labore voluptatibus! Eaque cupiditate minima, at placeat totam, magni doloremque veniam neque porro libero rerum unde voluptatem!
+
+      <template v-slot:actions>
+        <v-btn @click = "snackbar = false">Close</v-btn>
+      </template>
+    </v-snackbar>
+
     <v-data-table-server v-model:items-per-page="itemsPerPage" :headers="headers" :items-length="length" :items="items"
         :loading="loading" class="elevation-1" item-value="name" @update:options="loadItems">
 
@@ -55,7 +77,7 @@
                         <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
                             Close
                         </v-btn>
-                        <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
+                        <v-btn :loading= "btnLoading" color="blue-darken-1" variant="text" @click="save">
                             Save
                         </v-btn>
                     </v-card-actions>
@@ -69,7 +91,7 @@
 import AxiosHelper from "../helper/axiosHelper";
 export default {
     data: () => ({
-        itemsPerPage: 5,
+        itemsPerPage: 10,
         dialog: false,
         headers: [
             { title: 'ID', key: 'id' },
@@ -92,15 +114,43 @@ export default {
         items: [],
         loading: true,
         length: 0,
+        snackbar: false,
+        btnLoading:false,
     }),
     methods: {
         async loadItems() {
-            this.loading = true
-            const response = await AxiosHelper.get(`/users`);
-            const data = await response.data;
-            this.items = data;
-            this.loading = false;
+
+            try {
+                this.loading = true;
+                this.btnLoading = true;
+                const response = await AxiosHelper.get(`/users`);
+                const data = await response.data;
+                this.items = data;
+                this.loading = false;
+                this.btnLoading = false;
+            } catch (error) {
+                this.snackbar = true;
+            }
         },
+        async save(){
+            try {
+                this.loading = true;
+                this.btnLoading = true;
+                const response = await AxiosHelper.get(`/users`);
+                const data = await response.data;
+                this.items = data;
+                this.loading = false;
+                this.btnLoading = false;
+            } catch (error) {
+                this.snackbar = true;
+            }
+            
+
+        },
+        async editUser(item){
+            this.user = item;
+            this.dialog = true;
+        }
     },
 }
 </script>

@@ -1,14 +1,26 @@
 <template>
-    <v-container  class="bg-blue">
-        
-        <v-row class="pa-4 align-center" >
-            <div :class="['text-h4', 'pa-2']">App Config</div>
+    <v-container class="bg-blue">
+
+        <v-row class="pa-4 align-center">
+            <div :class="['text-h4', 'pa-2']">Users</div>
             <v-spacer></v-spacer>
-            <v-btn class="bg-white" @click="dialog = true">Hello</v-btn>
+            <v-btn class="bg-white" @click="dialog = true">Add</v-btn>
         </v-row>
-            
-        
+
+
     </v-container>
+
+
+
+    <v-snackbar v-model="snackbar" location="center">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, ratione debitis quis est labore voluptatibus!
+        Eaque cupiditate minima, at placeat totam, magni doloremque veniam neque porro libero rerum unde voluptatem!
+
+        <template v-slot:actions>
+            <v-btn @click="snackbar = false">Close</v-btn>
+        </template>
+    </v-snackbar>
+
     <v-data-table-server v-model:items-per-page="itemsPerPage" :headers="headers" :items-length="length" :items="items"
         :loading="loading" class="elevation-1" item-value="name" @update:options="loadItems">
         <template v-slot:tfoot?>
@@ -27,6 +39,20 @@
                 mdi-delete
             </v-icon>
         </template>
+        <template v-slot:item.role="{ item }">
+            <v-chip class="ma-2" color="primary" label>
+                <v-icon start icon="mdi-account-circle-outline"></v-icon>
+                admin
+            </v-chip>
+
+        </template>
+
+        <template v-slot:item.status="{ item }">
+            <v-chip class="ma-2" color="pink" label text-color="white">
+                <v-icon start icon="mdi-label"></v-icon>
+                active
+            </v-chip>
+        </template>
     </v-data-table-server>
     <template>
         <v-row justify="center">
@@ -44,15 +70,16 @@
                         <v-container>
                             <v-row>
                                 <v-col cols="12" sm="6" md="4">
-                                    <v-text-field v-model="user.firstName" label="First Name*" required value></v-text-field>
+                                    <v-text-field v-model="user.firstName" label="First Name*" required
+                                        value></v-text-field>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="4">
-                                    <v-text-field v-model="user.lastName" label="Last Name*" hint="example of persistent helper text"
-                                        persistent-hint required></v-text-field>
+                                    <v-text-field v-model="user.lastName" label="Last Name*"
+                                        hint="example of persistent helper text" persistent-hint required></v-text-field>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="4">
-                                    <v-text-field v-model="user.username" label="Username*" hint="example of persistent helper text" persistent-hint
-                                        required></v-text-field>
+                                    <v-text-field v-model="user.username" label="Username*"
+                                        hint="example of persistent helper text" persistent-hint required></v-text-field>
                                 </v-col>
                                 <v-col cols="12">
                                     <v-text-field label="Email*" required></v-text-field>
@@ -73,7 +100,7 @@
                         <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
                             Close
                         </v-btn>
-                        <v-btn color="blue-darken-1" variant="text" @click="save">
+                        <v-btn :loading="btnLoading" color="blue-darken-1" variant="text" @click="save">
                             Save
                         </v-btn>
                     </v-card-actions>
@@ -87,12 +114,12 @@
 import AxiosHelper from "../helper/axiosHelper";
 export default {
     data: () => ({
-        itemsPerPage: 5,
+        itemsPerPage: 10,
         dialog: false,
-        user:{
-            firstName:"",
-            lastName:"",
-            username:""
+        user: {
+            firstName: "",
+            lastName: "",
+            username: ""
         },
         headers: [
             {
@@ -118,20 +145,40 @@ export default {
         items: [],
         loading: true,
         length: 0,
+        snackbar: false,
+        btnLoading: false,
     }),
     methods: {
         async loadItems() {
-            this.loading = true
-            const response = await AxiosHelper.get(`/users`);
-            const data = await response.data;
-            this.items = data;
-            this.loading = false;
+
+            try {
+                this.loading = true;
+                this.btnLoading = true;
+                const response = await AxiosHelper.get(`/users`);
+                const data = await response.data;
+                this.items = data;
+                this.loading = false;
+                this.btnLoading = false;
+            } catch (error) {
+                this.snackbar = true;
+            }
         },
-        async save(){
-            console.log(this.user);
+        async save() {
+            try {
+                this.loading = true;
+                this.btnLoading = true;
+                const response = await AxiosHelper.get(`/users`);
+                const data = await response.data;
+                this.items = data;
+                this.loading = false;
+                this.btnLoading = false;
+            } catch (error) {
+                this.snackbar = true;
+            }
+
 
         },
-        async editUser(item){
+        async editUser(item) {
             this.user = item;
             this.dialog = true;
         }

@@ -9,6 +9,7 @@
           <v-list-item prepend-icon="mdi-view-dashboard" title="AppConfig List" @click="appconfig(2)"></v-list-item>
           <v-list-item prepend-icon="mdi-view-dashboard" title="Labels" @click="labels(3)"></v-list-item>
           <v-list-item prepend-icon="mdi-view-dashboard" title="Airports" @click="airport(4)"></v-list-item>
+          <v-list-item prepend-icon="mdi-view-dashboard" title="About" @click="about(5)"></v-list-item>
         </v-list>
         <template v-slot:append>
           <div class="pa-2">
@@ -17,13 +18,18 @@
             </v-btn>
           </div>
         </template>
+        
       </v-navigation-drawer>
       <v-main >
         <router-view></router-view>
       </v-main>
+      
     </v-layout>
+  
   </v-card>
+ 
 </template>
+
 
 <script>
 
@@ -58,6 +64,11 @@ export default {
       this.value = value;
 
       this.$router.push("/airports");
+    },
+    about(value) {
+      this.value = value;
+
+      this.$router.push("/about");
     },
 
   }
