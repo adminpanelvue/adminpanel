@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  
     <v-layout>
       <v-navigation-drawer class="bg-dark" theme="dark" permanent>
         <v-list color="transparent">
@@ -26,7 +26,7 @@
       
     </v-layout>
   
-  </v-card>
+  
  
 </template>
 
