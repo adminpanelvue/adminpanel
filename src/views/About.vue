@@ -6,5 +6,10 @@
         <h2 style="color: rgb(14, 14, 72); text-align: center;">
             Ajet Admin Panel
         </h2>
+        <a href="https://www.anadolujet.com/tr">
+            <p style="text-align:center">@anadolujet</p>
+        </a>
+        <v-banner></v-banner>
+        
     </div>
 </template>
