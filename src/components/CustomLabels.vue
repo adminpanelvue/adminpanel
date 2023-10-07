@@ -58,8 +58,7 @@
                                     <v-text-field v-model="user.firstName" label="ID*" required value></v-text-field>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="4">
-                                    <v-text-field v-model="user.lastName" label="Lang*"
-                                        hint="example of persistent helper text" persistent-hint required></v-text-field>
+                                    <v-select :items="['tr', 'eng']" label="Lang*" required></v-select>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="4">
                                     <v-text-field v-model="user.username" label="Key*"
@@ -69,7 +68,7 @@
                                     <v-text-field v-model="user.username" label="Value*"
                                         hint="example of persistent helper text" persistent-hint required></v-text-field>
                                 </v-col>
-                                
+
                             </v-row>
                         </v-container>
                         <small>*indicates required field</small>
