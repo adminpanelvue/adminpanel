@@ -2,7 +2,7 @@
     <v-container class="bg-blue">
 
         <v-row class="pa-4 align-center">
-            <div :class="['text-h4', 'pa-2']">i18n</div>
+            <div :class="['text-h4', 'pa-2']">Labels</div>
             <v-spacer></v-spacer>
             <v-btn class="bg-white" @click="dialog = true">Add</v-btn>
         </v-row>
@@ -49,7 +49,7 @@
                 </template>
                 <v-card>
                     <v-card-title>
-                        <span class="text-h5">Save i18n</span>
+                        <span class="text-h5">Save Labels</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container>
